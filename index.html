@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brazil Unit Economics — A Primer for Franchise Operators</title>
+<meta name="description" content="A first-principles primer on why franchisees and small business owners in Brazil face astronomical interest rates, a tax cliff at ~US$1M revenue, and heavy labor costs — and the economic history that produced those laws.">
+<style>
+/* ---------- Design tokens ---------- */
+:root{
+  --bg:#f6f4ef; --bg2:#fffdf9; --bg3:#efece5;
+  --ink:#1c1a17; --ink2:#4d4842; --ink3:#7a746c;
+  --line:#dcd7cd;
+  --accent:#0f7a5b; --accent2:#c8642b; --warn:#b8342f; --gold:#b98a1c; --blue:#2c5fa8;
+  --accent-soft:#dff1ea; --accent2-soft:#f8e6da; --warn-soft:#f7dedc; --gold-soft:#f6ecd0; --blue-soft:#dfe8f7;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(30,25,15,.06);
+  --radius:14px;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111311; --bg2:#191c19; --bg3:#222622;
+    --ink:#ecebe6; --ink2:#bdbab2; --ink3:#8b877f;
+    --line:#2f342f;
+    --accent:#4fc39a; --accent2:#e58a53; --warn:#ef6f68; --gold:#e0b04a; --blue:#7aa6e6;
+    --accent-soft:#16302a; --accent2-soft:#33231a; --warn-soft:#361d1c; --gold-soft:#32291a; --blue-soft:#1b2638;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111311; --bg2:#191c19; --bg3:#222622;
+  --ink:#ecebe6; --ink2:#bdbab2; --ink3:#8b877f;
+  --line:#2f342f;
+  --accent:#4fc39a; --accent2:#e58a53; --warn:#ef6f68; --gold:#e0b04a; --blue:#7aa6e6;
+  --accent-soft:#16302a; --accent2-soft:#33231a; --warn-soft:#361d1c; --gold-soft:#32291a; --blue-soft:#1b2638;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;line-height:1.15;margin:0 0 .5em}
+h1{font-size:clamp(2.1rem,5vw,3.6rem)}
+h2{font-size:clamp(1.6rem,3.2vw,2.3rem)}
+h3{font-size:1.25rem}
+p{margin:0 0 1em}
+a{color:var(--accent)}
+strong{color:var(--ink)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+section{padding:64px 0;border-top:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.lede{font-size:1.15rem;color:var(--ink2);max-width:720px}
+.muted{color:var(--ink3)}
+.small{font-size:.88rem}
+code{font-family:var(--mono);font-size:.9em;background:var(--bg3);padding:.1em .4em;border-radius:5px}
+
+/* ---------- Header ---------- */
+header.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:12px;height:56px}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.05rem;white-space:nowrap}
+.brand span{color:var(--accent)}
+nav.links{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none;-ms-overflow-style:none}
+nav.links::-webkit-scrollbar{display:none}
+nav.links a{white-space:nowrap;text-decoration:none;color:var(--ink2);font-size:.85rem;padding:6px 10px;border-radius:8px}
+nav.links a:hover{background:var(--bg3);color:var(--ink)}
+.theme{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;flex-shrink:0}
+.theme button{background:transparent;border:0;color:var(--ink3);padding:6px 9px;cursor:pointer;font-size:.8rem;line-height:1}
+.theme button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+/* ---------- Hero ---------- */
+.hero{padding:72px 0 56px;border-top:0;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(600px 300px at 10% 0%,var(--accent-soft),transparent 70%),
+  radial-gradient(500px 260px at 95% 20%,var(--accent2-soft),transparent 70%);opacity:.9;pointer-events:none}
+.hero .wrap{position:relative}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:36px}
+.stat{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.stat .n{font-family:var(--serif);font-size:1.9rem;font-weight:700;line-height:1.05}
+.stat .l{font-size:.8rem;color:var(--ink3);margin-top:6px}
+.stat.warn .n{color:var(--warn)} .stat.gold .n{color:var(--gold)} .stat.acc .n{color:var(--accent)} .stat.blue .n{color:var(--blue)}
+
+/* ---------- Cards / components ---------- */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 12px 12px 0;margin:20px 0}
+.callout.warn{border-color:var(--warn);background:var(--warn-soft)}
+.callout.gold{border-color:var(--gold);background:var(--gold-soft)}
+.callout.blue{border-color:var(--blue);background:var(--blue-soft)}
+.callout h4{margin:0 0 6px;font-family:var(--sans);font-size:.95rem}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:3px 9px;border-radius:999px;border:1px solid var(--line);color:var(--ink2);background:var(--bg2)}
+.lever{display:flex;gap:16px;align-items:flex-start}
+.lever .ico{flex:0 0 44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:1.2rem}
+.l1 .ico{background:var(--warn-soft);color:var(--warn)} .l2 .ico{background:var(--gold-soft);color:var(--gold)}
+.l3 .ico{background:var(--blue-soft);color:var(--blue)} .l4 .ico{background:var(--accent2-soft);color:var(--accent2)}
+
+/* controls */
+.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px 22px;margin:14px 0 18px}
+.ctl label{display:flex;justify-content:space-between;font-size:.85rem;color:var(--ink2);margin-bottom:4px}
+.ctl label output{font-family:var(--mono);color:var(--ink);font-weight:600}
+input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+select,input[type=number]{width:100%;background:var(--bg2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font:inherit;font-size:.95rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:14px}
+.kpi{background:var(--bg3);border-radius:10px;padding:12px 14px}
+.kpi .v{font-family:var(--mono);font-size:1.25rem;font-weight:700}
+.kpi .k{font-size:.75rem;color:var(--ink3)}
+.kpi.hot .v{color:var(--warn)} .kpi.ok .v{color:var(--accent)} .kpi.gold .v{color:var(--gold)} .kpi.blue .v{color:var(--blue)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.seg button{border:0;background:transparent;color:var(--ink2);padding:8px 14px;cursor:pointer;font:inherit;font-size:.88rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+
+/* charts */
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:var(--sans);fill:var(--ink2);font-size:12px}
+.chart .axis{stroke:var(--line)}
+.chart .grid{stroke:var(--line);stroke-dasharray:2 4}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.82rem;color:var(--ink2);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:.8rem;padding:6px 10px;border-radius:8px;opacity:0;transform:translate(-50%,-120%);transition:opacity .12s;z-index:100;white-space:nowrap}
+
+/* table */
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);font-weight:600}
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* accordion */
+details{border:1px solid var(--line);border-radius:12px;background:var(--bg2);margin-bottom:10px}
+details summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:"+";font-family:var(--mono);color:var(--ink3);font-size:1.1rem}
+details[open] summary::after{content:"–"}
+details .body{padding:0 18px 16px;color:var(--ink2)}
+
+/* timeline */
+.timeline{position:relative;padding-left:26px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl{position:relative;margin-bottom:18px}
+.tl::before{content:"";position:absolute;left:-23px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tl .y{font-family:var(--mono);font-size:.75rem;color:var(--accent);letter-spacing:.08em}
+.tl h4{margin:2px 0 4px;font-family:var(--sans);font-size:1rem}
+.tl p{margin:0;color:var(--ink2);font-size:.95rem}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--line);background:var(--bg2);color:var(--ink2);padding:8px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:.86rem}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tabpanel{display:none}.tabpanel.on{display:block}
+
+/* footer */
+footer{padding:40px 0 60px;border-top:1px solid var(--line);color:var(--ink3);font-size:.85rem}
+footer ul{padding-left:18px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:20px}
+.toc a{text-decoration:none;color:var(--ink);background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:block;font-size:.92rem}
+.toc a b{display:block;font-family:var(--mono);font-size:.7rem;color:var(--accent);letter-spacing:.1em}
+.toc a:hover{border-color:var(--accent)}
+.reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">Brazil <span>Unit Economics</span></div>
+    <nav class="links" aria-label="Sections">
+      <a href="#origin">Question</a><a href="#principles">First principles</a><a href="#capital">Capital</a><a href="#tax">Tax cliff</a><a href="#labor">Labor</a><a href="#friction">Friction</a><a href="#system">System</a><a href="#operator">For operators</a>
+    </nav>
+    <div class="theme" role="group" aria-label="Theme">
+      <button data-theme-set="light" title="Light">☀</button>
+      <button data-theme-set="auto" title="Match system" aria-pressed="true">A</button>
+      <button data-theme-set="dark" title="Dark">☾</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">A primer for multi-unit operators</div>
+    <h1>Why "unit economics" means something <em>different</em> in Brazil</h1>
+    <p class="lede">A US franchisee looks at a cafe and sees a build-out, a lease, a crew and a margin. A Brazilian franchisee sees the same four things plus three invisible partners: a central bank charging 13.75%, a tax code that roughly doubles its take past ~R$4.8M in revenue, and a labor code from 1943. This primer works backward from that reality to the economics and history that produced it.</p>
+    <div class="stats">
+      <div class="stat warn"><div class="n">13.75%</div><div class="l">Selic policy rate, Sept 2026 (peaked at 15% in 2025)</div></div>
+      <div class="stat gold"><div class="n">R$4.8M</div><div class="l">Simples Nacional cap, aggregated across every company a person owns &gt;10% of</div></div>
+      <div class="stat blue"><div class="n">~1,500 hrs</div><div class="l">Average annual hours a mid-size firm spends complying with taxes (worst in the OECD sample)</div></div>
+      <div class="stat acc"><div class="n">2026–2033</div><div class="l">Transition window for the CBS/IBS dual-VAT reform now in its test phase</div></div>
+    </div>
+    <div class="toc">
+      <a href="#origin"><b>00</b>The question</a>
+      <a href="#principles"><b>01</b>First principles: four levers the state holds</a>
+      <a href="#capital"><b>02</b>Lever 1 · Cost of capital</a>
+      <a href="#tax"><b>03</b>Lever 2 · The tax cliff</a>
+      <a href="#labor"><b>04</b>Lever 3 · The cost of a person</a>
+      <a href="#friction"><b>05</b>Lever 4 · Compliance friction</a>
+      <a href="#system"><b>06</b>How the loops lock together</a>
+      <a href="#operator"><b>07</b>What it means for a US operator</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 00 ORIGIN ================= -->
+<section id="origin">
+  <div class="wrap reveal">
+    <div class="eyebrow">00 · The question</div>
+    <h2>Why is capital so scarce for small business in Brazil?</h2>
+    <p class="lede">Ask a Brazilian operator and the answer is not the one a US franchisee expects. It is not bureaucracy, and it is not the franchisor. It is the price of money and the shape of the tax code, which together make the same store worth much less to the person who owns it.</p>
+    <div class="grid3" style="margin-top:24px">
+      <div class="card"><div class="pill">Observation 1</div><h3 style="margin-top:8px">Rates, not regulation</h3><p class="small muted" style="margin:0">Interest rates are the binding constraint. They make no sense against the thin margins of a small business, so debt-financed growth rarely works.</p></div>
+      <div class="card"><div class="pill">Observation 2</div><h3 style="margin-top:8px">A cliff at about US$1M</h3><p class="small muted" style="margin:0">Past roughly US$1M in revenue the tax rate roughly doubles, and the threshold follows the person, so every business an owner holds is added together.</p></div>
+      <div class="card"><div class="pill">Observation 3</div><h3 style="margin-top:8px">Few multi-unit owners</h3><p class="small muted" style="margin:0">The usual workaround is spreading ownership across family members, which runs out fast. The result is very few multi-unit franchisees and almost none past five units.</p></div>
+    </div>
+    <div class="callout" style="margin-top:24px">
+      <h4>Each observation is directionally right</h4>
+      <p style="margin:0">The rest of this page explains the mechanism behind each one, the economic levers involved, and why the country arrived at these laws in the first place.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 01 FIRST PRINCIPLES ================= -->
+<section id="principles">
+  <div class="wrap reveal">
+    <div class="eyebrow">01 · First principles</div>
+    <h2>A business is a machine. The state controls four of its dials.</h2>
+    <p class="lede">Strip away franchise agreements and brand standards and any cafe is the same machine: it borrows capital, hires labor, converts both into sales, and keeps what is left after the state takes its share. A government cannot legislate demand, but it sets the price of every input on the way through.</p>
+
+    <div class="grid2" style="margin-top:24px">
+      <div class="card lever l1"><div class="ico">₢</div><div><h3>Cost of capital</h3><p class="muted small" style="margin:0">Policy rate plus bank spread. Decides whether debt-financed growth is even arithmetically possible.</p></div></div>
+      <div class="card lever l2"><div class="ico">%</div><div><h3>Tax take and its shape</h3><p class="muted small" style="margin:0">Not just how much, but where the thresholds sit and whether they are smooth or cliffs.</p></div></div>
+      <div class="card lever l3"><div class="ico">👤</div><div><h3>Cost of a person</h3><p class="muted small" style="margin:0">Statutory add-ons to wages, dismissal costs, and litigation risk per employee.</p></div></div>
+      <div class="card lever l4"><div class="ico">⧗</div><div><h3>Compliance friction</h3><p class="muted small" style="margin:0">Hours, software, accountants and lawyers needed just to stay legal. A tax paid in time rather than money.</p></div></div>
+    </div>
+
+    <h3 style="margin-top:36px">Same cafe, two countries</h3>
+    <p class="muted small">Drag the sliders. The model is deliberately simple: one unit, one owner, revenue minus food, labor, occupancy and royalties, then interest on a build-out loan, then income taxes. Brazil defaults reflect a food-service unit inside Simples Nacional (Anexo I) with a working-capital loan at typical 2026 bank rates; the US defaults reflect an S-corp pass-through with an SBA-style loan.</p>
+    <div class="card">
+      <div class="controls">
+        <div class="ctl"><label>Annual revenue (US$) <output id="o-rev">$900k</output></label><input type="range" id="i-rev" min="400" max="2500" step="25" value="900"></div>
+        <div class="ctl"><label>Operating margin before interest &amp; tax <output id="o-margin">16%</output></label><input type="range" id="i-margin" min="4" max="25" step="1" value="16"></div>
+        <div class="ctl"><label>Debt as % of revenue <output id="o-debt">20%</output></label><input type="range" id="i-debt" min="0" max="120" step="5" value="20"></div>
+        <div class="ctl"><label>Brazil loan rate <output id="o-brrate">24%</output></label><input type="range" id="i-brrate" min="12" max="60" step="1" value="24"></div>
+        <div class="ctl"><label>US loan rate <output id="o-usrate">9%</output></label><input type="range" id="i-usrate" min="4" max="14" step="0.5" value="9"></div>
+      </div>
+      <svg id="cmp-chart" class="chart" style="aspect-ratio:900/320" viewBox="0 0 900 320" role="img" aria-label="Waterfall comparison of net profit in US vs Brazil"></svg>
+      <div class="legend"><span><i style="background:var(--blue)"></i>Operating profit</span><span><i style="background:var(--warn)"></i>Interest</span><span><i style="background:var(--gold)"></i>Income tax</span><span><i style="background:var(--accent)"></i>Owner keeps</span></div>
+      <div class="kpis">
+        <div class="kpi blue"><div class="v" id="k-us">–</div><div class="k">US owner keeps (after interest &amp; tax)</div></div>
+        <div class="kpi hot"><div class="v" id="k-br">–</div><div class="k">Brazil owner keeps</div></div>
+        <div class="kpi gold"><div class="v" id="k-ratio">–</div><div class="k">Brazil net as share of US net</div></div>
+        <div class="kpi"><div class="v" id="k-be">–</div><div class="k">Operating margin needed in Brazil just to cover interest</div></div>
+      </div>
+      <p class="small muted" style="margin:14px 0 0">Tax treatment: US shows federal + typical state pass-through tax on net profit (~30%). Brazil inside Simples is taxed on <em>gross revenue</em> (effective ~8–10% at this size for Anexo I, payroll tax included), which is why the gold bar is visible even when profit is thin. Above R$4.8M the model switches to Lucro Presumido plus separate employer payroll taxes, see §03.</p>
+    </div>
+
+    <div class="callout gold" style="margin-top:24px">
+      <h4>The first-principles insight</h4>
+      <p style="margin:0">Interest and revenue-based taxes are both <strong>fixed claims that do not shrink when margins do</strong>. A business with a 15% operating margin can survive one of them. In Brazil it faces both, so the survivable margin floor is far higher, and the range of concepts that "work" as franchises is far narrower. That is what "unit economics has a different meaning" means in practice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 CAPITAL ================= -->
+<section id="capital">
+  <div class="wrap reveal">
+    <div class="eyebrow">02 · Lever 1</div>
+    <h2>Cost of capital: why Brazil has the world's most expensive money</h2>
+    <p class="lede">Brazil's real interest rate (policy rate minus expected inflation) has sat near the top of the world for three decades. In 2025 the Selic hit 15%; in September 2026 it was cut for the fifth straight meeting to 13.75%. A small business does not borrow at Selic. It borrows at Selic plus a spread that is itself among the widest on earth.</p>
+
+    <div class="card">
+      <h3 style="margin-bottom:4px">Selic policy rate, 2010–2026</h3>
+      <p class="small muted">Year-end values; 2026 shows the September 16 decision. Hover or tap for details.</p>
+      <svg id="selic-chart" class="chart" style="aspect-ratio:900/300" viewBox="0 0 900 300" role="img" aria-label="Selic rate 2010 to 2026"></svg>
+      <div class="legend"><span><i style="background:var(--warn)"></i>Selic (Brazil)</span><span><i style="background:var(--blue)"></i>Fed funds upper bound (US)</span></div>
+    </div>
+
+    <h3 style="margin-top:36px">From policy rate to what a cafe actually pays</h3>
+    <div class="grid3">
+      <div class="card"><div class="pill">Layer 1</div><h3 style="margin-top:8px">Selic · 13.75%</h3><p class="small muted" style="margin:0">The risk-free floor. Every real in the system can earn this in overnight government paper, so a bank must beat it to lend to you at all.</p></div>
+      <div class="card"><div class="pill">Layer 2</div><h3 style="margin-top:8px">Bank spread · +8 to +25 pts</h3><p class="small muted" style="margin:0">Average corporate working-capital loans ran ~23% in 2026. Five banks hold most of the market; recovery on defaulted collateral is slow and litigious; taxes on financial operations (IOF) and reserve requirements are baked in.</p></div>
+      <div class="card"><div class="pill">Layer 3</div><h3 style="margin-top:8px">Small-firm premium · 30–60%+</h3><p class="small muted" style="margin:0">Unsecured lines, overdrafts (cheque especial) and receivables anticipation carry rates that would be usury elsewhere. This is where a first-time franchisee actually lives.</p></div>
+    </div>
+
+    <h3 style="margin-top:36px">Why? Five root causes, in causal order</h3>
+    <details open><summary>1 · Hyperinflation left a scar the system still prices</summary><div class="body"><p>Between 1980 and 1994 Brazil went through five currencies and annual inflation that exceeded 2,000%. The Plano Real (1994) killed it, but only by making the central bank credibly willing to keep rates brutally high. Every subsequent inflation scare (2002, 2015, 2021–22) reinforced the reflex. Inflation expectations remain "unanchored" in the central bank's own language, so the neutral real rate the bank believes it needs (~5%) is double what most peers assume.</p></div></details>
+    <details><summary>2 · Indexation never fully died</summary><div class="body"><p>Rents, wages, pensions, utility tariffs and much government spending are still legally linked to past inflation. When prices rise, costs mechanically follow, so a rate hike has to be larger to bite. This is why Brazil's central bank moves in bigger steps and holds longer than the Fed.</p></div></details>
+    <details><summary>3 · Fiscal dominance: the state is the biggest borrower</summary><div class="body"><p>Gross public debt sits around three-quarters of GDP, much of it short-dated and floating-rate (linked to Selic). The 1988 Constitution hard-wired spending growth (pensions, health, education floors) that Congress cannot easily cut. A government that must roll over enormous debt every year competes with every cafe for the same savings. The market prices the risk that it will inflate its way out, which keeps the rate high, which raises interest costs, which widens the deficit. That loop is the core of the problem.</p></div></details>
+    <details><summary>4 · Earmarked credit crowds out free credit</summary><div class="body"><p>Roughly 40% of Brazilian credit is "directed": subsidized housing, agriculture and BNDES development loans at below-market rates, funded by mandatory allocations. Banks compensate by charging more on the "free" segment, which is exactly where small business borrows. Subsidized credit for favored sectors is paid for by unsubsidized credit for everyone else.</p></div></details>
+    <details><summary>5 · Weak creditor recovery and a concentrated banking system</summary><div class="body"><p>Bankruptcy resolution in Brazil has historically taken years with cents-on-the-dollar recovery, so lenders price every loan as if it will default. Combine that with a market where a handful of banks control most assets, and there is little competitive pressure on spreads. Pix (2020), open finance and fintech lenders are eroding this, but slowly.</p></div></details>
+
+    <h3 style="margin-top:36px">What a build-out loan really costs</h3>
+    <div class="card">
+      <div class="controls">
+        <div class="ctl"><label>Loan amount (US$) <output id="o-loan">$350k</output></label><input type="range" id="i-loan" min="100" max="1000" step="25" value="350"></div>
+        <div class="ctl"><label>Term (years) <output id="o-term">7</output></label><input type="range" id="i-term" min="2" max="10" step="1" value="7"></div>
+        <div class="ctl"><label>Brazil rate <output id="o-lbr">24%</output></label><input type="range" id="i-lbr" min="12" max="60" step="1" value="24"></div>
+        <div class="ctl"><label>US rate <output id="o-lus">9%</output></label><input type="range" id="i-lus" min="4" max="14" step="0.5" value="9"></div>
+      </div>
+      <div class="kpis">
+        <div class="kpi blue"><div class="v" id="l-us-pmt">–</div><div class="k">US monthly payment</div></div>
+        <div class="kpi hot"><div class="v" id="l-br-pmt">–</div><div class="k">Brazil monthly payment</div></div>
+        <div class="kpi blue"><div class="v" id="l-us-int">–</div><div class="k">US total interest</div></div>
+        <div class="kpi hot"><div class="v" id="l-br-int">–</div><div class="k">Brazil total interest</div></div>
+        <div class="kpi gold"><div class="v" id="l-extra">–</div><div class="k">Extra units-worth of interest paid in Brazil (loan-equivalents)</div></div>
+      </div>
+      <p class="small muted" style="margin:14px 0 0">At the default settings the Brazilian operator pays more in interest than the loan principal itself. That is the arithmetic behind "capital is scarce": it is not missing, it is priced so that a normal-margin business cannot afford to use it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 TAX ================= -->
+<section id="tax">
+  <div class="wrap reveal">
+    <div class="eyebrow">03 · Lever 2</div>
+    <h2>The tax cliff: "it doubles after US$1M, and it's by person"</h2>
+    <p class="lede">The "doubles at US$1M, by person" observation maps almost exactly onto one law: Complementary Law 123 of 2006, which created <strong>Simples Nacional</strong>. Understanding why that law exists explains both the gift and the trap.</p>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>What Simples is</h3>
+        <p class="small" style="margin:0">A single monthly payment that replaces up to eight federal, state and municipal taxes (IRPJ, CSLL, PIS, COFINS, IPI, ICMS, ISS and, crucially, the employer's 20% social-security contribution on payroll). Rates are progressive on gross revenue, roughly 4% to 19% for commerce/food service. It applies to companies with up to <strong>R$4.8M</strong> in trailing-12-month revenue, which is roughly <strong>US$0.9–1.0M</strong> at recent exchange rates. That is the "US$1M" line operators talk about.</p>
+      </div>
+      <div class="card">
+        <h3>Why it is "by person"</h3>
+        <p class="small" style="margin:0">Article 3 of the law disqualifies any company whose partner holds <strong>more than 10%</strong> of another company if the <strong>combined</strong> gross revenue of all such companies exceeds R$4.8M. The cap follows the owner, not the CNPJ (tax ID). Open a second cafe under a second company and the revenues are summed. Exceed the limit and exclusion can be retroactive, with back taxes, interest and penalties. Hence the family workaround: a spouse or adult child as the sole owner of the next unit resets the counter, once per person.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:36px">What leaving Simples actually does to the tax bill</h3>
+    <p class="small muted">Illustrative effective rates for a food-service operator as a share of gross revenue. Move the slider across the R$4.8M line. Toggle how many family-owned companies the revenue is split across.</p>
+    <div class="card">
+      <div class="controls">
+        <div class="ctl"><label>Total group revenue (R$) <output id="o-trev">R$4.0M</output></label><input type="range" id="i-trev" min="500" max="30000" step="100" value="4000"></div>
+        <div class="ctl"><label>Separate owners (family CNPJs) <output id="o-owners">1</output></label><input type="range" id="i-owners" min="1" max="6" step="1" value="1"></div>
+        <div class="ctl"><label>Payroll as % of revenue <output id="o-pay">28%</output></label><input type="range" id="i-pay" min="15" max="40" step="1" value="28"></div>
+        <div class="ctl"><label>R$ per US$ <output id="o-fx">5.40</output></label><input type="range" id="i-fx" min="4.5" max="6.5" step="0.1" value="5.4"></div>
+      </div>
+      <svg id="tax-chart" class="chart" style="aspect-ratio:900/300" viewBox="0 0 900 300" role="img" aria-label="Effective tax rate versus revenue with Simples cliff"></svg>
+      <div class="legend"><span><i style="background:var(--gold)"></i>Effective tax, % of revenue</span><span><i style="background:var(--warn)"></i>Simples cap (per owner)</span><span><i style="background:var(--accent)"></i>Your position</span></div>
+      <div class="kpis">
+        <div class="kpi"><div class="v" id="t-per">–</div><div class="k">Revenue per owner</div></div>
+        <div class="kpi gold"><div class="v" id="t-regime">–</div><div class="k">Regime</div></div>
+        <div class="kpi hot"><div class="v" id="t-rate">–</div><div class="k">Effective tax, % of revenue (incl. payroll taxes)</div></div>
+        <div class="kpi"><div class="v" id="t-usd">–</div><div class="k">Group revenue in US$</div></div>
+      </div>
+      <p class="small muted" style="margin:14px 0 0">Mechanism of the jump: inside Simples the employer social-security charge is <em>inside</em> the single rate. Outside it, the company pays Lucro Presumido taxes on revenue (roughly 9–10% for food service after PIS/COFINS, IRPJ, CSLL and ICMS at typical regimes) <em>plus</em> a separate ~28–30% employer charge on the entire payroll (INSS 20%, FGTS 8%, RAT and "third-party" contributions). For a labor-heavy business that second piece is what makes the total look like it doubled: measured against the mid-range Simples rate most growing operators actually pay, the all-in bill rises 1.6–2× at the line. Figures are simplified; state ICMS regimes and municipal rules vary widely.</p>
+    </div>
+
+    <h3 style="margin-top:36px">Why the law was written this way</h3>
+    <div class="timeline">
+      <div class="tl"><div class="y">1988</div><h4>The "Citizen Constitution"</h4><p>Post-dictatorship Brazil wrote generous social rights into the constitution: universal health, pensions, education spending floors. It also told the state to give small businesses "differentiated and favored treatment." Both promises had to be funded. Tax burden climbed from ~24% of GDP in 1990 to ~33% by the 2000s, mostly via taxes on consumption and payroll rather than income, because those are easier to collect in an economy with vast informality.</p></div>
+      <div class="tl"><div class="y">1996–2006</div><h4>Informality as the problem to solve</h4><p>By the early 2000s roughly half of Brazilian workers were informal and millions of businesses simply never registered. The state's answer was not to lower the general burden (it could not, given the constitutional spending) but to carve out a cheap on-ramp: Simples Federal (1996), then Simples Nacional (2006) unifying all three levels of government. The goal was formalization, not scale.</p></div>
+      <div class="tl"><div class="y">2006–2018</div><h4>The cliff is a design choice, not an accident</h4><p>Every subsidized regime needs a boundary, and every boundary needs an anti-abuse rule. The per-person aggregation exists precisely to stop one owner from splitting a large business into many small ones. The cap was raised (R$2.4M → R$3.6M → R$4.8M in 2018) but the shape stayed: a sharp step rather than a smooth phase-out. Legislators optimized for the millions of micro firms entering the system, not the thousands trying to grow past it.</p></div>
+      <div class="tl"><div class="y">2019–2024</div><h4>The tax wedge becomes visible</h4><p>Franchising boomed inside the cap (Brazil now has one of the largest franchise sectors on earth by brand count) while remaining overwhelmingly single-unit. The economic term is a <strong>notch</strong>: a threshold where the average tax rate jumps discontinuously. Firms bunch just below it, split legally across relatives, or stop growing. Economists call this a "size-dependent distortion"; it shows up in Brazil's data as a missing middle of mid-sized firms.</p></div>
+      <div class="tl"><div class="y">2023–2033</div><h4>Reform, partially</h4><p>Constitutional Amendment 132 (2023) replaces five consumption taxes with a dual VAT (CBS federal, IBS state/municipal) at a combined standard rate estimated around 26.5–28%. 2026 is a 1% test year; the old taxes phase out by 2033. Simples survives, but firms inside it will face pressure from business customers who want VAT credits. The notch is not removed; its edges are being redrawn.</p></div>
+    </div>
+
+    <div class="callout warn" style="margin-top:24px">
+      <h4>Why this caps multi-unit franchising</h4>
+      <p style="margin:0">A US operator scales by consolidating: one entity, one balance sheet, one line of credit secured against many units. In Brazil the tax law rewards the opposite: fragment ownership across people to stay under the notch. Fragmented ownership cannot be collateralized cleanly, cannot centralize purchasing without triggering related-party scrutiny, and runs out of relatives. Five units at ~R$1M each is about where the arithmetic of a family runs out, which is exactly what operators on the ground report.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 LABOR ================= -->
+<section id="labor">
+  <div class="wrap reveal">
+    <div class="eyebrow">04 · Lever 3</div>
+    <h2>The cost of a person</h2>
+    <p class="lede">The Consolidação das Leis do Trabalho (CLT) dates to 1943, written under Getúlio Vargas on a corporatist model borrowed from 1930s Italy. It treats the employment relationship as something the state guarantees rather than something two parties negotiate. Eighty years of case law and a 2017 reform have modified it, not replaced it.</p>
+
+    <div class="card">
+      <h3 style="margin-bottom:4px">What a R$2,000/month crew member costs the cafe</h3>
+      <p class="small muted">Statutory items only. Toggle regime to see why leaving Simples hurts labor-heavy businesses most.</p>
+      <div class="seg" role="group" aria-label="Regime"><button data-regime="simples" aria-pressed="true">Inside Simples</button><button data-regime="presumido" aria-pressed="false">Outside Simples</button></div>
+      <svg id="labor-chart" class="chart" style="aspect-ratio:900/230" viewBox="0 0 900 230" role="img" aria-label="Stacked cost of one employee"></svg>
+      <div class="kpis">
+        <div class="kpi"><div class="v">R$2,000</div><div class="k">Gross monthly wage</div></div>
+        <div class="kpi hot"><div class="v" id="lab-total">–</div><div class="k">True monthly cost to employer</div></div>
+        <div class="kpi gold"><div class="v" id="lab-mult">–</div><div class="k">Multiplier on wage</div></div>
+      </div>
+      <div class="tbl-wrap" style="margin-top:16px"><table>
+        <thead><tr><th>Item</th><th>Rate</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td>13th salary</td><td>8.33%</td><td>One extra month's pay every December, mandatory.</td></tr>
+          <tr><td>Vacation + 1/3 bonus</td><td>11.11%</td><td>30 paid days plus a one-third premium on that month.</td></tr>
+          <tr><td>FGTS</td><td>8%</td><td>Severance fund deposited monthly to a government account in the worker's name.</td></tr>
+          <tr><td>Employer INSS</td><td>20%</td><td>Social security. Replaced by the Simples single rate while inside the regime.</td></tr>
+          <tr><td>RAT + third parties</td><td>~5.8%</td><td>Occupational-risk insurance and levies for Sesc/Senac/Sebrae training bodies. Waived inside Simples.</td></tr>
+          <tr><td>Dismissal without cause</td><td>40% of FGTS balance</td><td>Fine paid to the worker on top of notice. Not in the monthly bar but real.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="grid2" style="margin-top:20px">
+      <div class="card"><h3>Why the state chose this</h3><p class="small" style="margin:0">Vargas needed an urban industrial workforce loyal to the state rather than to unions or communists. Guaranteeing rights by statute, funded by employers, was the bargain. The 1988 Constitution then elevated many of those rights (FGTS, 13th, vacation premium, 44-hour week) to constitutional status, putting them beyond ordinary legislation. Labor courts became one of the busiest judicial systems in the world, with millions of claims a year; a franchisee with 20 staff should expect to be sued periodically as a cost of doing business.</p></div>
+      <div class="card"><h3>The economic lever it pulls</h3><p class="small" style="margin:0">A high, fixed cost per formal worker pushes marginal jobs into informality or into "PJ" contracting (workers incorporating as one-person companies). It also raises the return to automation and self-service, which is why Brazilian retail and food service adopted kiosks, apps and Pix payments faster than the US. The 2017 reform allowed negotiated agreements to override some statutory rules and made losing plaintiffs pay costs; claims fell sharply but the cost structure remained.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 FRICTION ================= -->
+<section id="friction">
+  <div class="wrap reveal">
+    <div class="eyebrow">05 · Lever 4</div>
+    <h2>Compliance friction: the tax you pay in hours</h2>
+    <p class="lede">Brazil has 27 state VAT (ICMS) regimes, over 5,500 municipal service taxes (ISS), cumulative federal levies, and an electronic invoicing system that reports every sale to the tax authority in real time. This is why Brazilian operators say "regulation" is not the root problem: it is real, but it is a symptom of the fiscal machine, not its cause.</p>
+
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="t1">The layered tax stack</button>
+      <button role="tab" aria-selected="false" data-tab="t2">Why so complex</button>
+      <button role="tab" aria-selected="false" data-tab="t3">The 2026–2033 reform</button>
+    </div>
+    <div class="tabpanel on" id="t1">
+      <div class="card">
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Level</th><th>Tax</th><th>Base</th><th>Notes for a cafe</th></tr></thead>
+          <tbody>
+            <tr><td>Federal</td><td>IRPJ + CSLL</td><td>Profit (or presumed profit)</td><td>Corporate income taxes; ~24% combined on presumed margin under Lucro Presumido.</td></tr>
+            <tr><td>Federal</td><td>PIS + COFINS</td><td>Gross revenue</td><td>3.65% cumulative or 9.25% non-cumulative with credits. Being replaced by CBS.</td></tr>
+            <tr><td>Federal</td><td>Employer INSS, FGTS</td><td>Payroll</td><td>See §04.</td></tr>
+            <tr><td>State</td><td>ICMS</td><td>Goods</td><td>Rates and substitution rules differ in all 27 states; food service often has special regimes. Being replaced by IBS.</td></tr>
+            <tr><td>Municipal</td><td>ISS</td><td>Services</td><td>2–5%, set by each of 5,570 municipalities. Being replaced by IBS.</td></tr>
+            <tr><td>Federal</td><td>IOF</td><td>Credit and FX</td><td>A tax on borrowing itself, layered into loan rates.</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="tabpanel" id="t2">
+      <div class="card">
+        <p><strong>Federalism without coordination.</strong> The 1988 Constitution gave states and municipalities their own taxing powers to fund devolved responsibilities. Each level then used its tax as an industrial-policy tool: states offered ICMS breaks to lure factories (the "fiscal war"), municipalities competed on ISS. Complexity is the residue of thirty years of competitive exemptions.</p>
+        <p><strong>Cumulative taxes are easy to collect.</strong> Taxes on gross revenue at every stage of a supply chain (rather than value added) are simple for a revenue-hungry state to administer and hard to evade with electronic invoicing, but they cascade: a cafe pays tax on inputs that were already taxed. That is why the same headline rates produce a higher effective burden than in a VAT country.</p>
+        <p style="margin:0"><strong>Real-time surveillance as a substitute for trust.</strong> Since the NF-e electronic invoice (2008) and the SPED digital bookkeeping system, every invoice is validated by the state before it is legally issued. The upside is that Brazil's tax authority is one of the most technologically advanced in the world. The downside is that every business needs an accountant on retainer and enterprise-grade software from day one.</p>
+      </div>
+    </div>
+    <div class="tabpanel" id="t3">
+      <div class="card">
+        <div class="timeline">
+          <div class="tl"><div class="y">2026</div><h4>Test year</h4><p>CBS 0.9% + IBS 0.1% charged and fully credited against existing taxes. Zero net burden; the point is to force every company's invoicing system to handle the new fields.</p></div>
+          <div class="tl"><div class="y">2027</div><h4>CBS goes live</h4><p>Federal PIS/COFINS abolished; CBS replaces them at roughly 8.8%. A "selective tax" on harmful goods (alcohol, tobacco, sugary drinks) begins.</p></div>
+          <div class="tl"><div class="y">2029–2032</div><h4>IBS phases in</h4><p>State ICMS and municipal ISS shrink by steps each year while IBS grows to fill the gap.</p></div>
+          <div class="tl"><div class="y">2033</div><h4>Dual VAT complete</h4><p>Single non-cumulative base, full input credits, destination principle. Combined standard rate estimated 26.5–28%, among the highest in the world, because the reform is revenue-neutral by design: it changes the shape of the burden, not its size.</p></div>
+        </div>
+        <div class="callout blue" style="margin-bottom:0"><h4>What it means for a franchisee</h4><p style="margin:0">Cascading disappears, which lowers effective rates for businesses with long supply chains. But Simples firms cannot pass full VAT credits to business customers, so B2B-heavy concepts (catering, corporate accounts) will feel pressure to leave Simples early. The notch does not go away; the reform does nothing to the R$4.8M line or the per-person rule.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 SYSTEM ================= -->
+<section id="system">
+  <div class="wrap reveal">
+    <div class="eyebrow">06 · The system</div>
+    <h2>How the loops lock together</h2>
+    <p class="lede">None of the four levers is a policy mistake in isolation. Each is a rational response to the one before it. That is what makes the system stable, and why it has survived left and right governments alike.</p>
+    <div class="card" style="padding:12px">
+      <svg id="loop-chart" class="chart" style="aspect-ratio:900/490" viewBox="0 0 900 490" role="img" aria-label="Causal loop diagram of Brazil's small business constraints"></svg>
+    </div>
+    <div class="grid2" style="margin-top:20px">
+      <div class="card">
+        <h3>The reinforcing loop (red)</h3>
+        <p class="small" style="margin:0">Constitutional spending → structural deficit → heavy debt issuance → high Selic to keep inflation credible → higher interest on that same debt → bigger deficit. Interest alone consumes a larger share of Brazil's budget than health or education. Every attempt to break it (spending caps in 2016, the fiscal framework of 2023) has been softened by Congress within a few years.</p>
+      </div>
+      <div class="card">
+        <h3>The balancing loops (green)</h3>
+        <p class="small" style="margin:0">Informality is the economy's escape valve; Simples is the state's attempt to close it; the notch is Simples' side effect; family fragmentation is the entrepreneur's answer to the notch. Each loop stabilizes the system at a low-growth, small-firm equilibrium. Growth-oriented operators are the ones the equilibrium is not designed for.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px">
+      <h4>So, is regulation the root problem?</h4>
+      <p style="margin:0">No. The root is a fiscal contract written in 1988 that promised more than the tax base could fund without either high inflation or high real interest rates. Brazil chose high real rates in 1994 and has paid for that choice every year since. Regulation, the tax stack and the labor code are the plumbing built around that contract. Fixing the plumbing (the 2026–2033 reform) helps; it does not change the water pressure.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 OPERATOR ================= -->
+<section id="operator">
+  <div class="wrap reveal">
+    <div class="eyebrow">07 · Application</div>
+    <h2>What it means for a US multi-unit operator</h2>
+    <p class="lede">Same brand, same four-wall model, different playbook. The table translates each US scaling habit into its Brazilian constraint.</p>
+    <div class="card">
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>US habit</th><th>Brazilian constraint</th><th>What local operators do instead</th></tr></thead>
+        <tbody>
+          <tr><td>Grow with SBA/bank debt at 8–10%</td><td>Free-market credit at 20–40%+; secured lending weak</td><td>Grow from retained cash, family equity, or franchisor-arranged supplier credit. Expect slower unit velocity.</td></tr>
+          <tr><td>One entity, consolidated P&amp;L, one credit line</td><td>Per-person R$4.8M Simples cap; retroactive exclusion risk</td><td>Family-distributed ownership per unit; or accept exit from Simples and rebuild the model at Lucro Presumido rates with much higher revenue per unit.</td></tr>
+          <tr><td>Labor at ~1.1–1.2× wage all-in</td><td>~1.3× inside Simples, ~1.6× outside, plus litigation</td><td>Lean crews, heavy self-service and app ordering, and PJ contracting where legal.</td></tr>
+          <tr><td>Bookkeeper + tax filing once a year</td><td>Real-time invoicing, monthly obligations at three government levels</td><td>Accountant on retainer from day one (~R$1–3k/month per CNPJ) and ERP integrated with NF-e.</td></tr>
+          <tr><td>Pricing power moves with CPI</td><td>Indexation is everywhere; rent and wage floors reset annually</td><td>Menu repricing several times a year is normal; contracts specify the index (IPCA, IGP-M).</td></tr>
+          <tr><td>Unit economics judged on 4-wall EBITDA</td><td>Interest and revenue-based tax are fixed claims ahead of EBITDA</td><td>Concepts need 18–25% four-wall margins to be fundable; low-margin, high-volume formats struggle.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <h3 style="margin-top:36px">What is changing, and what is not</h3>
+    <div class="grid3">
+      <div class="card"><div class="pill" style="color:var(--accent);border-color:var(--accent)">Improving</div><h3 style="margin-top:8px">Cost of money</h3><p class="small muted" style="margin:0">Selic in a cutting cycle (15% → 13.75%), Pix and open finance compressing bank spreads, fintech lenders underwriting on receivables data rather than collateral.</p></div>
+      <div class="card"><div class="pill" style="color:var(--gold);border-color:var(--gold)">Mixed</div><h3 style="margin-top:8px">Tax structure</h3><p class="small muted" style="margin:0">Cascading and the state-by-state maze are being dismantled through 2033. The standard rate will be very high, and the Simples notch and per-person rule remain untouched.</p></div>
+      <div class="card"><div class="pill" style="color:var(--warn);border-color:var(--warn)">Unchanged</div><h3 style="margin-top:8px">The fiscal contract</h3><p class="small muted" style="margin:0">Constitutional spending floors and pension growth still outrun revenue. Until that changes, the neutral real rate stays high and the whole stack stays expensive.</p></div>
+    </div>
+
+    <div class="callout gold" style="margin-top:24px">
+      <h4>One-sentence takeaway</h4>
+      <p style="margin:0">In the US, scale is the reward for good unit economics; in Brazil, scale is taxed and financed as if it were a risk, so the system selects for many small owners of few units rather than few owners of many, and any operator entering the market has to design around that rather than through it.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Sources and caveats.</strong> Rates and thresholds are as of September 2026 and are simplified for illustration; consult a Brazilian accountant (contador) before making decisions. Key references: Banco Central do Brasil (Selic decisions, credit statistics series 20723 for corporate working-capital rates); Lei Complementar 123/2006 art. 3 (Simples Nacional limits and >10% partner aggregation); Receita Federal Simples Nacional annex tables; Emenda Constitucional 132/2023 and Lei Complementar 214/2025 (CBS/IBS reform and transition calendar); CLT (Decreto-Lei 5.452/1943) and Lei 13.467/2017 (labor reform); World Bank Doing Business / PwC Paying Taxes compliance-hours estimates; Associação Brasileira de Franchising (ABF) sector data.</p>
+    <p style="margin:0">Built as a static page, no external dependencies, safe to host on GitHub Pages. Theme follows the system by default; use the toggle in the header to override.</p>
+  </div>
+</footer>
+<div class="tip" id="tip"></div>
+
+<script>
+/* ---------- Theme ---------- */
+(function(){
+  const root=document.documentElement;
+  const btns=[...document.querySelectorAll('[data-theme-set]')];
+  function apply(t){
+    if(t==='auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme',t);
+    btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)));
+    try{localStorage.setItem('bz-theme',t)}catch(e){}
+    setTimeout(drawAll,0);
+  }
+  let saved='auto'; try{saved=localStorage.getItem('bz-theme')||'auto'}catch(e){}
+  apply(saved);
+  btns.forEach(b=>b.addEventListener('click',()=>apply(b.dataset.themeSet)));
+  if(window.matchMedia){window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>setTimeout(drawAll,0));}
+})();
+
+/* ---------- Helpers ---------- */
+const $=s=>document.querySelector(s);
+const NS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+const fmtUSD=n=>'$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(2)+'M':Math.round(n/1e3)+'k');
+const fmtBRL=n=>'R$'+(Math.abs(n)>=1e6?(n/1e6).toFixed(1)+'M':Math.round(n/1e3)+'k');
+const tip=$('#tip');
+function showTip(e,txt){tip.textContent=txt;tip.style.opacity=1;tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';}
+function hideTip(){tip.style.opacity=0;}
+function bindRange(id,outId,fmt){const i=$(id),o=$(outId);const f=()=>{o.textContent=fmt(+i.value);drawAll();};i.addEventListener('input',f);return f;}
+
+/* ---------- 01 Comparison waterfall ---------- */
+function drawCompare(){
+  const rev=+$('#i-rev').value*1000, m=+$('#i-margin').value/100, d=+$('#i-debt').value/100;
+  const rBR=+$('#i-brrate').value/100, rUS=+$('#i-usrate').value/100;
+  const op=rev*m, debt=rev*d;
+  const usInt=debt*rUS, brInt=debt*rBR;
+  const usTax=Math.max(0,(op-usInt))*0.30;
+  const brTax=rev*0.09; // Simples Anexo I effective incl. payroll tax
+  const usNet=op-usInt-usTax, brNet=op-brInt-brTax;
+  $('#k-us').textContent=fmtUSD(usNet); $('#k-br').textContent=fmtUSD(brNet);
+  $('#k-ratio').textContent=usNet>0?Math.round(brNet/usNet*100)+'%':'–';
+  $('#k-be').textContent=Math.round((brInt+brTax)/rev*100)+'% ';
+  $('#k-be').nextElementSibling.textContent='Operating margin Brazil needs just to cover interest + revenue tax';
+
+  const svg=$('#cmp-chart'); svg.innerHTML='';
+  const W=900,H=320,L=70,R=20,T=30,B=60;
+  const maxv=Math.max(op,1);
+  el('text',{x:L,y:14,'font-size':'11',fill:css('--ink3')},svg,'Operating profit = '+fmtUSD(op)+' on '+fmtUSD(rev)+' revenue · bar width = share of operating profit');
+  const rows=[{name:'United States',vals:[op,-usInt,-usTax],net:usNet,y:T+20},{name:'Brazil',vals:[op,-brInt,-brTax],net:brNet,y:T+130}];
+  const x0=L, xw=W-L-R;
+  const sx=v=>x0+Math.max(0,Math.min(1,v/maxv))*xw;
+  const cols=[css('--blue'),css('--warn'),css('--gold')];
+  rows.forEach(r=>{
+    el('text',{x:x0,y:r.y-6,'font-weight':'600'},svg,r.name);
+    let cur=0;
+    // operating profit bar
+    el('rect',{x:sx(0),y:r.y,width:sx(op)-sx(0),height:34,fill:cols[0],rx:4,opacity:.55},svg);
+    cur=op;
+    const labels=['Interest','Income tax'];
+    r.vals.slice(1).forEach((v,i)=>{
+      const a=Math.max(0,cur+v), b=cur;
+      const rect=el('rect',{x:sx(a),y:r.y+2,width:Math.max(0,sx(b)-sx(a)),height:30,fill:cols[i+1],rx:3},svg);
+      rect.addEventListener('mousemove',e=>showTip(e,labels[i]+': '+fmtUSD(-v)));rect.addEventListener('mouseleave',hideTip);
+      cur=a;
+    });
+    const netW=Math.max(0,sx(Math.max(0,r.net))-sx(0));
+    el('rect',{x:sx(0),y:r.y+42,width:netW,height:14,fill:css('--accent'),rx:3},svg);
+    el('text',{x:sx(0)+netW+8,y:r.y+54,'font-family':'ui-monospace,monospace','font-weight':'700',fill:r.net<0?css('--warn'):css('--ink')},svg,(r.net<0?'−':'')+fmtUSD(Math.abs(r.net))+' kept');
+    if(r.net<0) el('text',{x:sx(0),y:r.y+74,fill:css('--warn'),'font-size':'11'},svg,'Loss: interest + revenue tax exceed operating profit');
+  });
+  // axis
+  el('line',{x1:x0,x2:x0+xw,y1:H-B+6,y2:H-B+6,class:'axis'},svg);
+  [0,.25,.5,.75,1].forEach(p=>{el('text',{x:x0+p*xw,y:H-B+24,'text-anchor':'middle','font-size':'11'},svg,fmtUSD(maxv*p));});
+}
+
+/* ---------- 02 Selic line chart ---------- */
+const SELIC=[[2010,10.75],[2011,11],[2012,7.25],[2013,10],[2014,11.75],[2015,14.25],[2016,13.75],[2017,7],[2018,6.5],[2019,4.5],[2020,2],[2021,9.25],[2022,13.75],[2023,11.75],[2024,12.25],[2025,15],[2026,13.75]];
+const FED=[[2010,.25],[2011,.25],[2012,.25],[2013,.25],[2014,.25],[2015,.5],[2016,.75],[2017,1.5],[2018,2.5],[2019,1.75],[2020,.25],[2021,.25],[2022,4.5],[2023,5.5],[2024,4.5],[2025,3.75],[2026,3.5]];
+function drawSelic(){
+  const svg=$('#selic-chart'); svg.innerHTML='';
+  const W=900,H=300,L=50,R=20,T=20,B=40;
+  const x=y=>L+(y-2010)/(2026-2010)*(W-L-R), yy=v=>T+(1-v/16)*(H-T-B);
+  for(let v=0;v<=16;v+=4){el('line',{x1:L,x2:W-R,y1:yy(v),y2:yy(v),class:'grid'},svg);el('text',{x:L-8,y:yy(v)+4,'text-anchor':'end','font-size':'11'},svg,v+'%');}
+  SELIC.forEach(([y])=>{if(y%2===0)el('text',{x:x(y),y:H-B+20,'text-anchor':'middle','font-size':'11'},svg,y);});
+  const path=(data,color,width)=>{const d=data.map((p,i)=>(i?'L':'M')+x(p[0])+','+yy(p[1])).join(' ');el('path',{d,fill:'none',stroke:color,'stroke-width':width,'stroke-linejoin':'round'},svg);};
+  const area='M'+x(2010)+','+yy(0)+' '+SELIC.map(p=>'L'+x(p[0])+','+yy(p[1])).join(' ')+' L'+x(2026)+','+yy(0)+'Z';
+  el('path',{d:area,fill:css('--warn'),opacity:.08},svg);
+  path(FED,css('--blue'),2.5); path(SELIC,css('--warn'),3);
+  // annotations
+  const ann=(yr,txt,dy)=>{const p=SELIC.find(s=>s[0]===yr);el('text',{x:x(yr),y:yy(p[1])+dy,'text-anchor':'middle','font-size':'11',fill:css('--ink2')},svg,txt);};
+  ann(2015,'Recession / impeachment',-14); ann(2020,'Pandemic low 2%',18); ann(2025,'15% peak',-14);
+  [[SELIC,css('--warn'),'Selic'],[FED,css('--blue'),'Fed funds']].forEach(([data,c,name])=>{
+    data.forEach(p=>{const dot=el('circle',{cx:x(p[0]),cy:yy(p[1]),r:5,fill:c},svg);
+      dot.addEventListener('mousemove',e=>showTip(e,name+' '+p[0]+': '+p[1]+'%'));dot.addEventListener('mouseleave',hideTip);
+      dot.addEventListener('touchstart',e=>showTip(e.touches[0],name+' '+p[0]+': '+p[1]+'%'),{passive:true});});
+  });
+}
+
+/* ---------- 02 Loan calculator ---------- */
+function pmt(P,r,n){const i=r/12;return i?P*i/(1-Math.pow(1+i,-n)):P/n;}
+function drawLoan(){
+  const P=+$('#i-loan').value*1000,yrs=+$('#i-term').value,br=+$('#i-lbr').value/100,us=+$('#i-lus').value/100,n=yrs*12;
+  const pu=pmt(P,us,n),pb=pmt(P,br,n);
+  $('#l-us-pmt').textContent='$'+Math.round(pu).toLocaleString();$('#l-br-pmt').textContent='$'+Math.round(pb).toLocaleString();
+  $('#l-us-int').textContent=fmtUSD(pu*n-P);$('#l-br-int').textContent=fmtUSD(pb*n-P);
+  $('#l-extra').textContent=((pb*n-P)-(pu*n-P))/P>=0?'+'+(((pb*n-P)-(pu*n-P))/P).toFixed(2)+'×':'–';
+}
+
+/* ---------- 03 Tax cliff ---------- */
+function effTax(revPerOwner,payroll){
+  // returns effective tax as % of revenue incl. payroll-related taxes
+  const CAP=4800000;
+  if(revPerOwner<=CAP){
+    // Simples Anexo I nominal brackets (progressive with deduction)
+    const br=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],[1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
+    const b=br.find(x=>revPerOwner<=x[0])||br[br.length-1];
+    const nominal=Math.max(.04,(revPerOwner*b[1]-b[2])/revPerOwner);
+    return nominal+payroll*0.08; // FGTS still due inside Simples
+  }
+  // Lucro Presumido, food service: PIS/COFINS 3.65 + IRPJ/CSLL on 8%/12% presumption ~2.9 + ICMS special regime ~3.2 ≈ 9.7% of revenue
+  return 0.097+payroll*(0.20+0.08+0.058);
+}
+function drawTax(){
+  const total=+$('#i-trev').value*1000, owners=+$('#i-owners').value, pay=+$('#i-pay').value/100, fx=+$('#i-fx').value;
+  const per=total/owners, rate=effTax(per,pay);
+  $('#t-per').textContent=fmtBRL(per);$('#t-regime').textContent=per<=4.8e6?'Simples':'Lucro Presumido';
+  $('#t-rate').textContent=(rate*100).toFixed(1)+'%';$('#t-usd').textContent=fmtUSD(total/fx);
+  const svg=$('#tax-chart');svg.innerHTML='';
+  const W=900,H=300,L=50,R=20,T=20,B=40,MAXR=12e6,MAXY=.35;
+  const x=v=>L+v/MAXR*(W-L-R), y=v=>T+(1-v/MAXY)*(H-T-B);
+  for(let v=0;v<=MAXY+.001;v+=.05){el('line',{x1:L,x2:W-R,y1:y(v),y2:y(v),class:'grid'},svg);el('text',{x:L-8,y:y(v)+4,'text-anchor':'end','font-size':'11'},svg,Math.round(v*100)+'%');}
+  for(let v=0;v<=MAXR;v+=2e6){el('text',{x:x(v),y:H-B+20,'text-anchor':'middle','font-size':'11'},svg,v?fmtBRL(v):'0');}
+  el('text',{x:W-R,y:H-B+36,'text-anchor':'end','font-size':'11',fill:css('--ink3')},svg,'Revenue per owner (R$)');
+  let d='';for(let v=1e5;v<=MAXR;v+=5e4){const r=effTax(v,pay);d+=(d?'L':'M')+x(v)+','+y(r)+' ';if(v<4.8e6&&v+5e4>4.8e6){d+='L'+x(4.8e6)+','+y(effTax(4.8e6,pay))+' L'+x(4.8e6)+','+y(effTax(4.8e6+1,pay))+' ';}}
+  el('path',{d,fill:'none',stroke:css('--gold'),'stroke-width':3},svg);
+  el('line',{x1:x(4.8e6),x2:x(4.8e6),y1:T,y2:H-B,stroke:css('--warn'),'stroke-dasharray':'4 4','stroke-width':1.5},svg);
+  el('text',{x:x(4.8e6)+6,y:T+12,'font-size':'11',fill:css('--warn')},svg,'R$4.8M cap');
+  // shading for zones
+  el('text',{x:x(2.4e6),y:H-B-8,'text-anchor':'middle','font-size':'11',fill:css('--ink3')},svg,'Simples Nacional');
+  el('text',{x:x(8.4e6),y:H-B-8,'text-anchor':'middle','font-size':'11',fill:css('--ink3')},svg,'Lucro Presumido (+ separate payroll taxes)');
+  const px=Math.min(per,MAXR);
+  el('circle',{cx:x(px),cy:y(rate),r:7,fill:css('--accent'),stroke:css('--bg2'),'stroke-width':2},svg);
+  el('text',{x:x(px)+(px>9e6?-12:12),y:y(rate)+(px>4e6&&px<6e6?26:-12),'text-anchor':px>9e6?'end':'start','font-size':'12','font-weight':'700',fill:css('--ink')},svg,(rate*100).toFixed(1)+'% · '+owners+' owner'+(owners>1?'s':''));
+}
+
+/* ---------- 04 Labor stacked bar ---------- */
+let regime='simples';
+function drawLabor(){
+  const wage=2000;
+  const items=[['13th salary',.0833,css('--blue')],['Vacation + ⅓',.1111,css('--accent')],['FGTS',.08,css('--gold')]];
+  if(regime==='presumido'){items.push(['Employer INSS',.20,css('--warn')],['RAT + third parties',.058,css('--accent2')]);}
+  const total=wage*(1+items.reduce((a,b)=>a+b[1],0));
+  $('#lab-total').textContent='R$'+Math.round(total).toLocaleString();$('#lab-mult').textContent=(total/wage).toFixed(2)+'×';
+  const svg=$('#labor-chart');svg.innerHTML='';
+  const W=900,L=20,R=20,y=70,h=56,MAX=wage*1.7;
+  const sx=v=>L+v/MAX*(W-L-R);
+  let cur=0;
+  const seg=(label,val,color)=>{const r=el('rect',{x:sx(cur),y,width:sx(cur+val)-sx(cur),height:h,fill:color,rx:0},svg);
+    r.addEventListener('mousemove',e=>showTip(e,label+': R$'+Math.round(val).toLocaleString()));r.addEventListener('mouseleave',hideTip);
+    if(val/MAX*(W-L-R)>70)el('text',{x:sx(cur)+8,y:y+h/2+4,'font-size':'11',fill:'#fff','font-weight':'600'},svg,label);
+    cur+=val;};
+  seg('Gross wage',wage,css('--ink3'));
+  items.forEach(([l,p,c])=>seg(l,wage*p,c));
+  el('text',{x:sx(cur)+8,y:y+h/2+4,'font-family':'ui-monospace,monospace','font-weight':'700','font-size':'14'},svg,'R$'+Math.round(total).toLocaleString());
+  el('line',{x1:sx(wage),x2:sx(wage),y1:y-14,y2:y+h+14,stroke:css('--ink3'),'stroke-dasharray':'3 3'},svg);
+  el('text',{x:sx(wage),y:y-20,'text-anchor':'middle','font-size':'11'},svg,'What the worker sees');
+  el('text',{x:L,y:y+h+40,'font-size':'12',fill:css('--ink2')},svg,regime==='simples'?'Inside Simples the 20% INSS and RAT/third-party levies are replaced by the single revenue-based rate.':'Outside Simples the employer pays ~28–30% on top of every wage, and dismissal costs still apply.');
+  // items legend row
+  let lx=L;const ly=y+h+70;
+  [['Gross wage',css('--ink3')],...items.map(i=>[i[0],i[2]])].forEach(([l,c])=>{el('rect',{x:lx,y:ly-10,width:12,height:12,fill:c,rx:3},svg);el('text',{x:lx+18,y:ly,'font-size':'11'},svg,l);lx+=l.length*7+40;});
+}
+document.querySelectorAll('[data-regime]').forEach(b=>b.addEventListener('click',()=>{regime=b.dataset.regime;document.querySelectorAll('[data-regime]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));drawLabor();}));
+
+/* ---------- 06 Causal loop diagram ---------- */
+function drawLoop(){
+  const svg=$('#loop-chart');svg.innerHTML='';
+  const ink=css('--ink'),ink2=css('--ink2'),bg2=css('--bg2'),line=css('--line'),warn=css('--warn'),acc=css('--accent'),gold=css('--gold'),blue=css('--blue');
+  const defs=el('defs',{},svg);
+  [['aw',warn],['ag',acc],['ab',blue],['ay',gold]].forEach(([id,c])=>{const m=el('marker',{id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:7,markerHeight:7,orient:'auto-start-reverse'},defs);el('path',{d:'M0,0 L10,5 L0,10 z',fill:c},m);});
+  const nodes={
+    con:{x:120,y:70,t:['1988 Constitution:','spending floors']},
+    def:{x:400,y:60,t:['Structural','deficit & debt']},
+    sel:{x:680,y:70,t:['High Selic /','real rates']},
+    intr:{x:780,y:200,t:['Interest cost','of public debt']},
+    spread:{x:520,y:190,t:['Wide bank','spreads']},
+    tax:{x:150,y:200,t:['High, cascading','tax burden']},
+    inf:{x:120,y:330,t:['Informality']},
+    simp:{x:380,y:330,t:['Simples Nacional','(R$4.8M notch)']},
+    frag:{x:640,y:330,t:['Family-fragmented','ownership']},
+    small:{x:520,y:430,t:['Few multi-unit','franchisees']},
+    clt:{x:130,y:430,t:['CLT labor cost']},
+  };
+  const link=(a,b,c,label,curve)=>{const A=nodes[a],B=nodes[b];const mx=(A.x+B.x)/2+(curve||0),my=(A.y+B.y)/2+(curve?curve*-.4:0);
+    const dx=B.x-A.x,dy=B.y-A.y,len=Math.hypot(dx,dy);const ex=B.x-dx/len*62,ey=B.y-dy/len*30;
+    el('path',{d:`M${A.x},${A.y} Q${mx},${my} ${ex},${ey}`,fill:'none',stroke:c,'stroke-width':2,'marker-end':`url(#${c===warn?'aw':c===acc?'ag':c===blue?'ab':'ay'})`,opacity:.9},svg);
+    if(label)el('text',{x:mx,y:my-4,'text-anchor':'middle','font-size':'10',fill:c,'font-weight':'600'},svg,label);};
+  link('con','def',warn,'must fund');link('def','sel',warn,'inflation risk');link('sel','intr',warn,'floating debt');link('intr','def',warn,'widens',-60);
+  link('sel','spread',blue,'floor');link('spread','small',blue,'no cheap debt',60);
+  link('con','tax',gold,'revenue need');link('def','tax',gold,'',0);link('tax','inf',acc,'escape');link('inf','simp',acc,'state response');
+  link('simp','frag',acc,'notch');link('frag','small',acc,'');link('tax','clt',gold,'',-40);link('clt','small',gold,'payroll levies',0);link('spread','frag',blue,'no collateral',0);
+  for(const k in nodes){const n=nodes[k];const w=130,h=44;const isRed=['con','def','sel','intr'].includes(k);
+    el('rect',{x:n.x-w/2,y:n.y-h/2,width:w,height:h,rx:10,fill:bg2,stroke:isRed?warn:k==='small'?ink:line,'stroke-width':isRed||k==='small'?2:1.2},svg);
+    n.t.forEach((t,i)=>el('text',{x:n.x,y:n.y+(i-(n.t.length-1)/2)*14+4,'text-anchor':'middle','font-size':'11.5',fill:ink,'font-weight':k==='small'?'700':'500'},svg,t));}
+  el('text',{x:20,y:482,'font-size':'11',fill:ink2},svg,'Red: reinforcing fiscal loop · Green: informality / Simples loop · Blue: credit channel · Gold: tax & labor channel');
+}
+
+/* ---------- Tabs ---------- */
+document.querySelectorAll('[role=tab]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('[role=tab]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+  document.querySelectorAll('.tabpanel').forEach(p=>p.classList.toggle('on',p.id===b.dataset.tab));
+}));
+
+/* ---------- Reveal on scroll ---------- */
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));}
+else document.querySelectorAll('.reveal').forEach(x=>x.classList.add('in'));
+
+/* ---------- Wire ranges ---------- */
+bindRange('#i-rev','#o-rev',v=>fmtUSD(v*1000));bindRange('#i-margin','#o-margin',v=>v+'%');bindRange('#i-debt','#o-debt',v=>v+'%');
+bindRange('#i-brrate','#o-brrate',v=>v+'%');bindRange('#i-usrate','#o-usrate',v=>v+'%');
+bindRange('#i-loan','#o-loan',v=>fmtUSD(v*1000));bindRange('#i-term','#o-term',v=>v);bindRange('#i-lbr','#o-lbr',v=>v+'%');bindRange('#i-lus','#o-lus',v=>v+'%');
+bindRange('#i-trev','#o-trev',v=>fmtBRL(v*1000));bindRange('#i-owners','#o-owners',v=>v);bindRange('#i-pay','#o-pay',v=>v+'%');bindRange('#i-fx','#o-fx',v=>v.toFixed(2));
+
+function drawAll(){drawCompare();drawSelic();drawLoan();drawTax();drawLabor();drawLoop();}
+drawAll();
+window.addEventListener('resize',()=>{clearTimeout(window.__rt);window.__rt=setTimeout(drawAll,150);});
+</script>
+</body>
+</html>
